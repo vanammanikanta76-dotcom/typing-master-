@@ -1,0 +1,100 @@
+
+        <!DOCTYPE html>
+<html>
+<head>
+    <title>Type Master</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 400px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Type Master</h1>
+
+    <p id="sentence">Press Start</p>
+
+    <input type="text" id="input" placeholder="Type here..." disabled>
+
+    <br>
+
+    <button id="startBtn">Start</button>
+    <button id="checkBtn">Check</button>
+
+    <h3 id="timer">Time: 60</h3>
+    <h3 id="result"></h3>
+</div>
+
+<script>
+const sentence = "I am learning web development";
+let time = 60;
+let timer = null;
+
+document.getElementById("startBtn").addEventListener("click", startGame);
+document.getElementById("checkBtn").addEventListener("click", checkTyping);
+
+function startGame() {
+    document.getElementById("sentence").innerText = sentence;
+    document.getElementById("input").disabled = false;
+    document.getElementById("input").value = "";
+    document.getElementById("result").innerText = "";
+    document.getElementById("input").focus();
+
+    clearInterval(timer);
+    time = 60;
+    document.getElementById("timer").innerText = "Time: " + time;
+
+    timer = setInterval(function() {
+        time--;
+        document.getElementById("timer").innerText = "Time: " + time;
+
+        if (time <= 0) {
+            clearInterval(timer);
+            document.getElementById("input").disabled = true;
+            document.getElementById("result").innerText = "Time Over!";
+        }
+    }, 1000);
+}
+
+function checkTyping() {
+    let typed = document.getElementById("input").value.trim();
+
+    if (typed === sentence) {
+        document.getElementById("result").innerText = "Correct! 🎉";
+    } else {
+        document.getElementById("result").innerText = "Wrong! ❌";
+    }
+}
+</script>
+
+</body>
+</html>
